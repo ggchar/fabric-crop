@@ -36,7 +36,7 @@ initCrop(image, canvas);
 
 ## Advanced usage
 
-You can pass the third argument for customize.
+You can pass the third argument for customization.
 
 ```js
 import { initCrop } from "fabric-crop";
