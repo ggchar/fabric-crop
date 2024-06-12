@@ -6,10 +6,10 @@ export const initCrop = (img, canvas, options) => {
     top: img.top,
     left: img.left,
     angle: img.angle,
-    width: img.getScaledWidth(),
-    height: img.getScaledHeight(),
-    strokeWidth: 0,
+    width: img.width * img.scaleX,
+    height: img.height * img.scaleY,
     strokeUniform: true,
+    strokeWidth: 0,
     cornerColor: "rgba(23,101,240,0.5)",
     cornerStrokeColor: "rgba(23,101,240,0.5)",
     padding: 0,
@@ -17,6 +17,7 @@ export const initCrop = (img, canvas, options) => {
     fill: "rgba(255, 255, 255, 1)",
     globalCompositeOperation: "overlay",
     lockRotation: true,
+    dirty: false,
   };
 
   let overlayRectOptions = {
@@ -24,8 +25,8 @@ export const initCrop = (img, canvas, options) => {
     top: img.top,
     left: img.left,
     angle: img.angle,
-    width: img.getScaledWidth(),
-    height: img.getScaledHeight(),
+    width: img.width * img.scaleX,
+    height: img.height * img.scaleY,
     selectable: false,
     selection: false,
     fill: "rgba(0, 0, 0, 0.5)",
@@ -90,23 +91,13 @@ export const initCrop = (img, canvas, options) => {
   var overlayRect = new fabric.Rect(overlayRectOptions);
   canvas.add(overlayRect);
 
-  var s = img.cropX,
-    o = img.cropY,
-    c = img.width,
-    l = img.height;
-
-  cropRect.set({
-    left: img.left + s * img.scaleX,
-    top: img.top + o * img.scaleY,
-    width: c * img.scaleX,
-    height: l * img.scaleY,
-    dirty: false,
-    initLeft: img.left + s * img.scaleX,
-    initTop: img.top + o * img.scaleY,
-  });
-
-  cropRect.oldScaleX = cropRect.scaleX;
-  cropRect.oldScaleY = cropRect.scaleY;
+  // cropRect.set({
+  //   left: img.left,
+  //   top: img.top,
+  //   width: img.width * img.scaleX,
+  //   height: img.height * img.scaleY,
+  //   dirty: false,
+  // });
 
   canvas.add(cropRect);
   canvas.discardActiveObject();
@@ -786,6 +777,7 @@ const loadFromURL = (url, options) =>
     imgElement.onload = () => {
       resolve(new fabric.Image(imgElement, options));
     };
+    imgElement.setAttribute('crossorigin', 'anonymous');
     imgElement.src = url;
   });
 
