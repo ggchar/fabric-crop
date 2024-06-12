@@ -1,6 +1,6 @@
 {
   "name": "fabric-crop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple and tiny image cropping library for fabric.js.",
   "main": "index.js",
   "scripts": {
